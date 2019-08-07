@@ -6,7 +6,7 @@ const Board = props => (
     {props.currentPuzzle.map((row, ind) => {
       return (
         <tbody id={ind}>
-          <Row rowNum={ind} row={row}/>
+          <Row rownum={ind} row={row}/>
         </tbody>  
       )
     })}

@@ -12,8 +12,24 @@ td {
 }
 
 .square {
-  height: 50px;
-  width: 50px;
+  height: 55px;
+  width: 52px;
   text-align: center;
   line-height: 50px;
+}
+
+.selectors {
+  border-radius: 50%;
+
+  width: 36px;
+  line-height: 36px;
+  padding: 8px;
+  margin: 8px 8px 0px 8px;
+  
+  background: #fff;
+  border: 2px solid #666;
+  color: #666;
+  text-align: center;
+  
+  font: 32px Arial, sans-serif;
 }
