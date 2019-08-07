@@ -1,0 +1,40 @@
+{
+  "name": "sudoku-solver",
+  "version": "1.0.0",
+  "description": "App for providing and solving Sudoku puzzles",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "jest",
+    "start": "webpack -d --watch & live-server --port=3030 --watch=dist --open=dist",
+    "start-dev": "webpack -d --watch",
+    "start-oh": "webpack -d --watch",
+    "start-server": "nodemon server/server.js",
+    "build": "webpack --mode production",
+    "full-start": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/glblaser/Sudoku-Solver.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/glblaser/Sudoku-Solver/issues"
+  },
+  "homepage": "https://github.com/glblaser/Sudoku-Solver#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "path": "^0.12.7",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.6",
+    "webpack": "^4.39.1",
+    "webpack-cli": "^3.3.6",
+    "webpack-dev-server": "^3.7.2"
+  }
+}
