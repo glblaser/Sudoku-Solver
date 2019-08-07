@@ -1,9 +1,15 @@
 import React from 'react'
 
 const Row = props => (
-  <div>
-    Rows is {props.row[0]}
-  </div>
+  <tr>
+    {props.row.map((square, ind) => {
+        return (
+          <td colNum={ind} className='square'>
+            {square}
+          </td>  
+        )
+    })}
+  </tr>
 )
 
 export default Row

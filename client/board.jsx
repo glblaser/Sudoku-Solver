@@ -2,15 +2,15 @@ import React from 'react'
 import Row from './row.jsx'
 
 const Board = props => (
-  <div>
+  <table cellSpacing="0" cellPadding="0">
     {props.currentPuzzle.map((row, ind) => {
       return (
-        <div id={ind}>
+        <tbody id={ind}>
           <Row rowNum={ind} row={row}/>
-        </div>  
+        </tbody>  
       )
     })}
-  </div>
+  </table>
 )
 
 export default Board

@@ -7,15 +7,15 @@ export default class App extends React.Component {
 
     this.state = {
       currentPuzzle: [
-        [1, null, null, null, null, null, null, null, null],
+        [0, 3, 0, 0, 0, 0, 0, 5, 0],
         [2, null, null, null, null, null, null, null, null],
         [3, null, null, null, null, null, null, null, null],
         [4, null, null, null, null, null, null, null, null],
         [5, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null]
+        [0, 3, 0, 0, 0, 0, 0, 5, 0],
+        [null, null, null, null, 3, null, null, null, null],
+        [0, 3, 0, 0, 0, 0, 0, 5, 0],
+        [null, 1, null, null, null, null, null, null, null]
       ]
     }
 

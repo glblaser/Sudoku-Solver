@@ -1,0 +1,19 @@
+body {
+  background-color: powderblue;
+}
+/* a {
+  display: inline-block;
+} */
+
+td {
+  border-collapse: collapse;
+  margin: 0; 
+  border: thin solid black;
+}
+
+.square {
+  height: 50px;
+  width: 50px;
+  text-align: center;
+  line-height: 50px;
+}
