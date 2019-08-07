@@ -3,10 +3,10 @@ import Row from './row.jsx'
 
 const Board = props => (
   <table cellSpacing="0" cellPadding="0">
-    {props.currentPuzzle.map((row, ind) => {
+    {props.currentBoard.map((row, ind) => {
       return (
-        <tbody id={ind}>
-          <Row rownum={ind} row={row}/>
+        <tbody id={`row${ind}`}>
+          <Row rownum={ind} row={row} currentPuzzle={props.currentPuzzle}/>
         </tbody>  
       )
     })}

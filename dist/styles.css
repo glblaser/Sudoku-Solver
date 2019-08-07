@@ -1,24 +1,28 @@
 body {
   background-color: powderblue;
 }
-/* a {
-  display: inline-block;
-} */
 
 td {
-  border-collapse: collapse;
-  margin: 0; 
-  border: thin solid black;
+  border: thin solid grey;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.blue {
+  color: blue;
 }
 
 .square {
-  height: 55px;
+  height: 52px;
   width: 52px;
   text-align: center;
-  line-height: 50px;
+  line-height: 52px;
+  font-size: 25px;
 }
 
-.selectors {
+.numChoices {
   border-radius: 50%;
 
   width: 36px;
@@ -32,4 +36,19 @@ td {
   text-align: center;
   
   font: 32px Arial, sans-serif;
+}
+
+#selectors {
+  margin-top: 15px;
+}
+
+/* ugly way to render thick lines to separate 9x9 board into 3x3s */
+#row3col0, #row3col1, #row3col2, #row3col3, #row3col4, #row3col5, #row3col6, #row3col7, #row3col8,
+#row6col0, #row6col1, #row6col2, #row6col3, #row6col4, #row6col5, #row6col6, #row6col7, #row6col8 {
+  border-top: solid black;
+}
+
+#row0col2, #row1col2, #row2col2, #row3col2, #row4col2, #row5col2, #row6col2, #row7col2, #row8col2,
+#row0col5, #row1col5, #row2col5, #row3col5, #row4col5, #row5col5, #row6col5, #row7col5, #row8col5 {
+  border-right: solid black;
 }

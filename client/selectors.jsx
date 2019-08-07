@@ -1,10 +1,10 @@
 import React from 'react'
 
 const Selectors = props => (
-  <div>
+  <div id='selectors'>
     {props.selectors.map((num, ind) => {
       return (
-        <a className='selectors'> 
+        <a className='numChoices'> 
           {num}
         </a>
       )
