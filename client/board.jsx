@@ -6,7 +6,13 @@ const Board = props => (
     {props.currentBoard.map((row, ind) => {
       return (
         <tbody id={`row${ind}`}>
-          <Row rownum={ind} row={row} currentPuzzle={props.currentPuzzle}/>
+          <Row 
+            row={row}
+            rownum={ind}
+            currentPuzzle={props.currentPuzzle}
+            currentCell={props.currentCell}
+            selectCell={props.selectCell}
+          />
         </tbody>  
       )
     })}
