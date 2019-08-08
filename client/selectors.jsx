@@ -4,7 +4,11 @@ const Selectors = props => (
   <div id='selectors'>
     {props.selectors.map((num, ind) => {
       return (
-        <a className='numChoices'> 
+        <a className='numChoices'
+          onClick={() => {
+            props.populateCell(num)
+          }}
+        >
           {num}
         </a>
       )
