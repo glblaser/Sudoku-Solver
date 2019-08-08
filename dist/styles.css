@@ -1,9 +1,30 @@
 body {
-  background-color: powderblue;
+  background-color: #F0EAD6;
 }
 
 td {
   border: thin solid grey;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: cornflowerblue;
+  border-color: #007bff;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid transparent;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: .75;
+  border-radius: .25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.title {
+  margin: 10px;
+  width: 60%;
+  font-family: "Arial Black", Gadget, sans-serif;
+  font-size: 65px;
 }
 
 .bold {
@@ -24,6 +45,12 @@ td {
   text-align: center;
   line-height: 52px;
   font-size: 25px;
+}
+
+.numChoices:hover {
+  border-color: blue;
+  background-color: blue;
+  color: white;
 }
 
 .numChoices {
