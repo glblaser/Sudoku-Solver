@@ -1,20 +1,36 @@
 import React from 'react'
 
+const classCalc = (currentPuzzle, currentCell, row, col) => {
+  let cls = ''
+
+  if (currentPuzzle[row][col] === 0 && currentCell[0] === row && currentCell[1] === col) {
+    cls = 'blue square selected'
+  } else if (currentPuzzle[row][col] === 0) {
+    cls = 'blue square'
+  } else {
+    cls = 'bold square'
+  }
+
+  return cls
+}
+
 const Row = props => (
-  <tr>
+
+  
+  <tr key={`tr-${props.rownum}`}>
     {props.row.map((square, ind) => {
       return (
-        <td 
+        <td
+          key={`td-${props.rownum}-${ind}`}
           colnum={ind} 
           id={`row${props.rownum}col${ind}`}
-          className={
-            (props.currentPuzzle[props.rownum][ind] === 0 && props.currentCell[0] === props.rownum && props.currentCell[1] === ind) ? 'blue square selected' 
-            : props.currentPuzzle[props.rownum][ind] === 0 ? 'blue square'
-            : 'bold square'}
+            className={classCalc(props.currentPuzzle, props.currentCell, props.rownum, ind)}
+          onKeyUp={props.handleKeyPress}
           onClick={() => {
             props.selectCell(props.rownum, ind)
           }}
         >
+          {/* {console.log(props.currentPuzzle[props.rownum][ind])} */}
           {square != 0
             ? square
             : null

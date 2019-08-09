@@ -13,7 +13,8 @@ td {
   text-align: center;
   vertical-align: middle;
   border: 1px solid transparent;
-  padding: .375rem .75rem;
+  padding: .375rem .35rem;
+  margin-right: .35rem;
   font-size: 1rem;
   line-height: .75;
   border-radius: .25rem;
@@ -48,8 +49,8 @@ td {
 }
 
 .numChoices:hover {
-  border-color: blue;
-  background-color: blue;
+  border-color: cornflowerblue;
+  background-color: cornflowerblue;
   color: white;
 }
 
