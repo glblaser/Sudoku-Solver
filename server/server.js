@@ -59,7 +59,7 @@ app.get('/puzzle', (req, res) => {
   solution = solution.split('').map(e => parseInt(e))
   let solutionMatrix = []
   for (let i=0; i<solution.length; i+=9) {
-    solutionMatrix.push(solution.slice(i, i+9))
+    solutionMatrix.push(solution.slice(i, i+9)) 
   }
 
   res.send({quiz: quizMatrix, solution: solutionMatrix})
