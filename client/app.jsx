@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { transitions, positions, Provider as AlertProvider, useAlert } from 'react-alert'
-import { sudokuChecker } from 'helpers.js'
+import { sudokuChecker } from './helpers.js'
 import AlertTemplate from 'react-alert-template-basic'
 
 import Menu from './menu.jsx'
@@ -155,7 +155,7 @@ export default class App extends React.Component {
 
   componentDidMount(){
     document.addEventListener("keyup", this.handleKeyPress);
-    console.log(sudokuChecker(this.state.currentBoard))
+    console.log(sudokuChecker(this.state.currentSolution))
   }
 
   render() {

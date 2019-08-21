@@ -41,4 +41,4 @@ function sudokuChecker(board) {
     : false;
 }
 
-module.exports({ sudokuChecker });
+module.exports = { sudokuChecker }
