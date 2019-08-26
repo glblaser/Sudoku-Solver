@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { transitions, positions, Provider as AlertProvider, useAlert } from 'react-alert'
-import { sudokuChecker } from './helpers.js'
+import { solveBoard, sudokuChecker  } from './solver.js'
 import AlertTemplate from 'react-alert-template-basic'
 
 import Menu from './menu.jsx'
@@ -62,6 +62,7 @@ export default class App extends React.Component {
       ],
       currentCell: [-1, -1],
       selectors: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+      customGame: false,
       solved: false
     };
 
@@ -73,6 +74,7 @@ export default class App extends React.Component {
     this.solvePuzzle = this.solvePuzzle.bind(this)
     this.handleKeyPress = this.handleKeyPress.bind(this)
     this.isCellSelected = this.isCellSelected.bind(this)
+    this.setCustomGame = this.setCustomGame.bind(this)
   }
 
   isCellSelected() {
@@ -92,6 +94,10 @@ export default class App extends React.Component {
         this.checkBoard()
       })
     }
+  }
+
+  setCustomGame() {
+    this.setState({customGame: true})
   }
 
   solvePuzzle() {
@@ -172,6 +178,7 @@ export default class App extends React.Component {
             getPuzzle={this.getPuzzle}
             resetPuzzle={this.resetPuzzle}
             solvePuzzle={this.solvePuzzle}
+            setCustomGame={this.setCustomGame}
           />
           <br />
           <Board
