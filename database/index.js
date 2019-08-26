@@ -1,13 +1,12 @@
 const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema
-
-const puzzleSchema = new mongoose.Schema({
+const puzzleSchema = mongoose.Schema({
   _id: String,
+  number: String,
   quizzes: String,
   solutions: String
 });
 
-const Puzzle = mongoose.model('Puzzle', puzzleSchema, 'puzzle');
+const Puzzle = mongoose.model('Puzzle', puzzleSchema);
 
 module.exports = { Puzzle };
