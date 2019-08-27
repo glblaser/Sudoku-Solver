@@ -65,7 +65,7 @@ export default class App extends React.Component {
         // [8, 6, 5, 3, 7, 9, 1, 4, 2]
       ],
       currentCell: [-1, -1],
-      selectors: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+      selectors: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
       setCustomGame: false,
       solved: false
     };
@@ -80,15 +80,15 @@ export default class App extends React.Component {
     this.isCellSelected = this.isCellSelected.bind(this);
     this.createCustomGame = this.createCustomGame.bind(this);
     this.clearBoards = this.clearBoards.bind(this);
+    this.startCustomGame = this.startCustomGame.bind(this);
   }
 
   isCellSelected() {
     let rowValid = this.state.currentCell[0] != -1;
     let colValid = this.state.currentCell[1] != -1;
-    let validCell =
-      this.state.currentPuzzle[this.state.currentCell[0]][
-        this.state.currentCell[1]
-      ] === 0;
+    let validCell = this.state.setCustomGame 
+      ? true
+      : this.state.currentPuzzle[this.state.currentCell[0]][this.state.currentCell[1]] === 0
     return rowValid && colValid && validCell;
   }
 
@@ -96,16 +96,26 @@ export default class App extends React.Component {
     let key = parseInt(e.key);
 
     if (key >= 1 && key <= 9 && this.isCellSelected()) {
-      let boardCopy = this.state.currentBoard;
-      boardCopy[this.state.currentCell[0]][this.state.currentCell[1]] = key;
-      this.setState({ currentBoard: boardCopy }, () => {
-        this.checkBoard();
-      });
+
+      if (this.state.setCustomGame) {
+        let boardCopy = JSON.parse(
+          JSON.stringify(this.state.currentBoard)
+        );
+        boardCopy[this.state.currentCell[0]][this.state.currentCell[1]] = key;
+        let puzzleCopy = JSON.parse(JSON.stringify(boardCopy))
+        this.setState({ currentBoard: boardCopy, currentPuzzle: puzzleCopy });
+      } else {
+        let boardCopy = this.state.currentBoard;
+        boardCopy[this.state.currentCell[0]][this.state.currentCell[1]] = key;
+        this.setState({ currentBoard: boardCopy }, () => {
+          this.checkBoard();
+        });
+      }
     }
   }
 
   clearBoards() {
-    let empty = [
+    let emptyBoard = [
       [0, 0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -117,18 +127,27 @@ export default class App extends React.Component {
       [0, 0, 0, 0, 0, 0, 0, 0, 0]
     ];
     this.setState({
-      currentPuzzle: empty,
-      currentBoard: empty,
-      currentSolution: empty
+      currentPuzzle: JSON.parse(JSON.stringify(emptyBoard)),
+      currentBoard: JSON.parse(JSON.stringify(emptyBoard)),
+      currentSolution: JSON.parse(JSON.stringify(emptyBoard))
     });
   }
 
   createCustomGame() {
     if (!this.state.setCustomGame) {
-      this.setState({ setCustomGame: true });
+      this.setState({ setCustomGame: true, solved: false });
       this.clearBoards();
     }
   }
+
+  startCustomGame() {
+    let solvedBoard = solveBoard(this.state.currentBoard)
+    if (solvedBoard === 'No solution') alert("Invalid puzzle. Please try again.")
+    else {
+      this.setState({ currentSolution: solvedBoard, setCustomGame: false})
+
+    }
+  } 
 
   solvePuzzle() {
     this.setState({
@@ -139,12 +158,16 @@ export default class App extends React.Component {
   }
 
   resetPuzzle() {
-    let oldBoard = JSON.parse(JSON.stringify(this.state.currentPuzzle));
-    this.setState({
-      currentBoard: oldBoard,
-      currentCell: [-1, -1],
-      solved: false
-    });
+    if (this.state.setCustomGame) {
+      this.clearBoards()
+    } else {
+      let oldBoard = JSON.parse(JSON.stringify(this.state.currentPuzzle));
+      this.setState({
+        currentBoard: oldBoard,
+        currentCell: [-1, -1],
+        solved: false
+      });
+    }
   }
 
   selectCell(row, col) {
@@ -155,7 +178,6 @@ export default class App extends React.Component {
 
   checkBoard() {
     if (!this.state.setCustomGame) {
-      console.log(this.state.setCustomGame)
       if (
         JSON.stringify(this.state.currentBoard) ===
         JSON.stringify(this.state.currentSolution)
@@ -171,19 +193,20 @@ export default class App extends React.Component {
 
   populateCell(num) {
     if (this.state.setCustomGame) {
-      let currentBoardCopy = JSON.parse(JSON.stringify(this.state.currentBoard))
+      let boardCopy = JSON.parse(
+        JSON.stringify(this.state.currentBoard)
+      );
       boardCopy[this.state.currentCell[0]][this.state.currentCell[1]] = num;
-      this.setState({ currentBoard: boardCopy, currentPuzzle: boardCopy })
-    }
-    if (this.state.currentCell[0] != -1) {
-      if (
-        this.state.currentPuzzle[this.state.currentCell[0]][this.state.currentCell[1]] === 0
-      ) {
-        let boardCopy = JSON.parse(JSON.stringify(this.state.currentBoard));
-        boardCopy[this.state.currentCell[0]][this.state.currentCell[1]] = num;
-        this.setState({ currentBoard: boardCopy }, () => {
-          this.checkBoard();
-        });
+      this.setState({ currentBoard: boardCopy, currentPuzzle: boardCopy });
+    } else {
+      if (this.state.currentCell[0] != -1) {
+        if (this.state.currentPuzzle[this.state.currentCell[0]][this.state.currentCell[1]] === 0) {
+          let boardCopy = JSON.parse(JSON.stringify(this.state.currentBoard));
+          boardCopy[this.state.currentCell[0]][this.state.currentCell[1]] = num;
+          this.setState({ currentBoard: boardCopy }, () => {
+            this.checkBoard();
+          });
+        }
       }
     }
   }
@@ -199,7 +222,6 @@ export default class App extends React.Component {
         currentBoard: quizCopy,
         currentSolution: solution,
         currentCell: [-1, -1],
-        selectors: [1, 2, 3, 4, 5, 6, 7, 8, 9],
         solved: false
       });
     });
@@ -221,8 +243,10 @@ export default class App extends React.Component {
           resetPuzzle={this.resetPuzzle}
           solvePuzzle={this.solvePuzzle}
           createCustomGame={this.createCustomGame}
+          startCustomGame={this.startCustomGame}
           setCustomGame={this.state.setCustomGame}
-        />
+        /> 
+
         <br />
         <Board
           currentPuzzle={this.state.currentPuzzle}
@@ -230,6 +254,7 @@ export default class App extends React.Component {
           currentCell={this.state.currentCell}
           handleKeyPress={this.handleKeyPress}
           selectCell={this.selectCell}
+          setCustomGame={this.state.setCustomGame}
         />
         <br />
         <Selectors
