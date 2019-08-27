@@ -93,7 +93,7 @@ export default class App extends React.Component {
   }
 
   handleKeyPress(e) {
-    let key = e.key === 'Backspace' ? 0 : parseInt(e.key);
+    let key = e.key === 'Backspace' || e.key === 'Delete' ? 0 : parseInt(e.key);
 
     if (key >= 0 && key <= 9 && this.isCellSelected()) {
 
