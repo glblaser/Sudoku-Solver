@@ -11,9 +11,11 @@ const Board = props => (
               key={`row-${ind}`}
               row={row}
               rownum={ind}
+              setCustomGame={props.setCustomGame}
               currentPuzzle={props.currentPuzzle}
               currentCell={props.currentCell}
               selectCell={props.selectCell}
+              setCustomGame={props.setCustomGame}
             /> 
         )
       })}

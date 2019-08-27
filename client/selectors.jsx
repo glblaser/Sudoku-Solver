@@ -4,15 +4,16 @@ const Selectors = props => (
   <div id='selectors' key={`selectorDiv`}>
     {props.selectors.map((num, ind) => {
       return (
-        <a 
+        <span
           key={`selector-${ind}`}
+          id={`selector-${num}`}
           className='numChoices'
           onClick={() => {
             props.populateCell(num)
           }}
         >
           {num}
-        </a>
+        </span>
       )
     })}
   </div>

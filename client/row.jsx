@@ -1,9 +1,11 @@
 import React from 'react'
 
-const classCalc = (currentPuzzle, currentCell, row, col) => {
+const classCalc = (setCustomGame, currentPuzzle, currentCell, row, col) => {
   let cls = ''
 
-  if (currentPuzzle[row][col] === 0 && currentCell[0] === row && currentCell[1] === col) {
+  if (setCustomGame && currentCell[0] === row && currentCell[1] === col) {
+    cls = 'bold square selected'
+  } else if (currentPuzzle[row][col] === 0 && currentCell[0] === row && currentCell[1] === col) {
     cls = 'blue square selected'
   } else if (currentPuzzle[row][col] === 0) {
     cls = 'blue square'
@@ -15,8 +17,6 @@ const classCalc = (currentPuzzle, currentCell, row, col) => {
 }
 
 const Row = props => (
-
-  
   <tr key={`tr-${props.rownum}`}>
     {props.row.map((square, ind) => {
       return (
@@ -24,13 +24,12 @@ const Row = props => (
           key={`td-${props.rownum}-${ind}`}
           colnum={ind} 
           id={`row${props.rownum}col${ind}`}
-            className={classCalc(props.currentPuzzle, props.currentCell, props.rownum, ind)}
+            className={classCalc(props.setCustomGame, props.currentPuzzle, props.currentCell, props.rownum, ind)}
           onKeyUp={props.handleKeyPress}
           onClick={() => {
             props.selectCell(props.rownum, ind)
           }}
         >
-          {/* {console.log(props.currentPuzzle[props.rownum][ind])} */}
           {square != 0
             ? square
             : null
