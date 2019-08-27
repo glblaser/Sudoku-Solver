@@ -93,9 +93,9 @@ export default class App extends React.Component {
   }
 
   handleKeyPress(e) {
-    let key = parseInt(e.key);
+    let key = e.key === 'Backspace' ? 0 : parseInt(e.key);
 
-    if (key >= 1 && key <= 9 && this.isCellSelected()) {
+    if (key >= 0 && key <= 9 && this.isCellSelected()) {
 
       if (this.state.setCustomGame) {
         let boardCopy = JSON.parse(
