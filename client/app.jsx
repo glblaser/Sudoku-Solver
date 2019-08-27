@@ -1,16 +1,21 @@
-import React from 'react'
-import axios from 'axios'
-import { transitions, positions, Provider as AlertProvider, useAlert } from 'react-alert'
-import { solveBoard, sudokuChecker  } from './solver.js'
-import AlertTemplate from 'react-alert-template-basic'
+import React from "react";
+import axios from "axios";
+import {
+  transitions,
+  positions,
+  Provider as AlertProvider,
+  useAlert
+} from "react-alert";
+import { solveBoard, sudokuChecker } from "./solver.js";
+import AlertTemplate from "react-alert-template-basic";
 
-import Menu from './menu.jsx'
-import Board from './board.jsx'
-import Selectors from './selectors.jsx'
+import Menu from "./menu.jsx";
+import Board from "./board.jsx";
+import Selectors from "./selectors.jsx";
 
 export default class App extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       currentPuzzle: [
@@ -36,7 +41,6 @@ export default class App extends React.Component {
         // [0, 0, 1, 0, 0, 8, 0, 0, 9],
         // [0, 0, 4, 1, 2, 0, 6, 0, 0],
         // [0, 6, 0, 0, 0, 0, 0, 4, 0]
-
         //Sample board partially filled for demo
         // [1, 3, 9, 7, 6, 2, 4, 5, 0],
         // [7, 4, 8, 5, 9, 1, 3, 2, 6],
@@ -62,95 +66,133 @@ export default class App extends React.Component {
       ],
       currentCell: [-1, -1],
       selectors: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-      customGame: false,
+      setCustomGame: false,
       solved: false
     };
 
     this.selectCell = this.selectCell.bind(this);
-    this.populateCell = this.populateCell.bind(this)
-    this.checkBoard = this.checkBoard.bind(this)
-    this.resetPuzzle = this.resetPuzzle.bind(this)
-    this.getPuzzle = this.getPuzzle.bind(this)
-    this.solvePuzzle = this.solvePuzzle.bind(this)
-    this.handleKeyPress = this.handleKeyPress.bind(this)
-    this.isCellSelected = this.isCellSelected.bind(this)
-    this.setCustomGame = this.setCustomGame.bind(this)
+    this.populateCell = this.populateCell.bind(this);
+    this.checkBoard = this.checkBoard.bind(this);
+    this.resetPuzzle = this.resetPuzzle.bind(this);
+    this.getPuzzle = this.getPuzzle.bind(this);
+    this.solvePuzzle = this.solvePuzzle.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.isCellSelected = this.isCellSelected.bind(this);
+    this.createCustomGame = this.createCustomGame.bind(this);
+    this.clearBoards = this.clearBoards.bind(this);
   }
 
   isCellSelected() {
-    let rowValid = this.state.currentCell[0] != -1
-    let colValid = this.state.currentCell[1] != -1
-    let validCell = this.state.currentPuzzle[this.state.currentCell[0]][this.state.currentCell[1]] === 0
-    return (rowValid && colValid && validCell)
+    let rowValid = this.state.currentCell[0] != -1;
+    let colValid = this.state.currentCell[1] != -1;
+    let validCell =
+      this.state.currentPuzzle[this.state.currentCell[0]][
+        this.state.currentCell[1]
+      ] === 0;
+    return rowValid && colValid && validCell;
   }
 
   handleKeyPress(e) {
-    let key = parseInt(e.key)
+    let key = parseInt(e.key);
 
-    if (key >= 1 && key <=9 && this.isCellSelected()) {
-      let boardCopy = this.state.currentBoard
-      boardCopy[this.state.currentCell[0]][this.state.currentCell[1]] = key
-      this.setState({currentBoard: boardCopy}, () => {
-        this.checkBoard()
-      })
+    if (key >= 1 && key <= 9 && this.isCellSelected()) {
+      let boardCopy = this.state.currentBoard;
+      boardCopy[this.state.currentCell[0]][this.state.currentCell[1]] = key;
+      this.setState({ currentBoard: boardCopy }, () => {
+        this.checkBoard();
+      });
     }
   }
 
-  setCustomGame() {
-    this.setState({customGame: true})
+  clearBoards() {
+    let empty = [
+      [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ];
+    this.setState({
+      currentPuzzle: empty,
+      currentBoard: empty,
+      currentSolution: empty
+    });
+  }
+
+  createCustomGame() {
+    if (!this.state.setCustomGame) {
+      this.setState({ setCustomGame: true });
+      this.clearBoards();
+    }
   }
 
   solvePuzzle() {
     this.setState({
-      currentBoard: this.state.currentSolution, 
-      currentCell: [-1,-1],
+      currentBoard: this.state.currentSolution,
+      currentCell: [-1, -1],
       solved: true
-    })
+    });
   }
 
   resetPuzzle() {
-    let oldBoard = JSON.parse(JSON.stringify(this.state.currentPuzzle))
+    let oldBoard = JSON.parse(JSON.stringify(this.state.currentPuzzle));
     this.setState({
       currentBoard: oldBoard,
-      currentCell: [-1,-1],
+      currentCell: [-1, -1],
       solved: false
-    })
+    });
   }
 
   selectCell(row, col) {
     if (!this.state.solved) {
-      this.setState({currentCell: [row,col]})
+      this.setState({ currentCell: [row, col] });
     }
   }
 
   checkBoard() {
-    if (JSON.stringify(this.state.currentBoard) === JSON.stringify(this.state.currentSolution)) {
-      console.log('SOLVED!')
-      // const alert = useAlert()
-      this.setState({solved: true, currentCell: [-1, -1]}, () => {
-        setTimeout(() => alert("SOLVED! You're a genius!"), 50)
-      })
+    if (!this.state.setCustomGame) {
+      console.log(this.state.setCustomGame)
+      if (
+        JSON.stringify(this.state.currentBoard) ===
+        JSON.stringify(this.state.currentSolution)
+      ) {
+        console.log("SOLVED!");
+        // const alert = useAlert()
+        this.setState({ solved: true, currentCell: [-1, -1] }, () => {
+          setTimeout(() => alert("SOLVED! You're a genius!"), 50);
+        });
+      }
     }
   }
 
   populateCell(num) {
+    if (this.state.setCustomGame) {
+      let currentBoardCopy = JSON.parse(JSON.stringify(this.state.currentBoard))
+      boardCopy[this.state.currentCell[0]][this.state.currentCell[1]] = num;
+      this.setState({ currentBoard: boardCopy, currentPuzzle: boardCopy })
+    }
     if (this.state.currentCell[0] != -1) {
-      if (this.state.currentPuzzle[this.state.currentCell[0]][this.state.currentCell[1]] === 0) {
-        let boardCopy = JSON.parse(JSON.stringify(this.state.currentBoard))
-        boardCopy[this.state.currentCell[0]][this.state.currentCell[1]] = num
-        this.setState({currentBoard: boardCopy}, () => {
-          this.checkBoard()
-        })
+      if (
+        this.state.currentPuzzle[this.state.currentCell[0]][this.state.currentCell[1]] === 0
+      ) {
+        let boardCopy = JSON.parse(JSON.stringify(this.state.currentBoard));
+        boardCopy[this.state.currentCell[0]][this.state.currentCell[1]] = num;
+        this.setState({ currentBoard: boardCopy }, () => {
+          this.checkBoard();
+        });
       }
     }
   }
 
   getPuzzle() {
-    axios.get(`/puzzle`)
-    .then(data => {
-      let quiz = data.data.quiz
-      let quizCopy = JSON.parse(JSON.stringify(quiz))
-      let solution = data.data.solution
+    axios.get(`/puzzle`).then(data => {
+      let quiz = data.data.quiz;
+      let quizCopy = JSON.parse(JSON.stringify(quiz));
+      let solution = data.data.solution;
 
       this.setState({
         currentPuzzle: quiz,
@@ -159,41 +201,42 @@ export default class App extends React.Component {
         currentCell: [-1, -1],
         selectors: [1, 2, 3, 4, 5, 6, 7, 8, 9],
         solved: false
-      })
+      });
     });
     // this.resetPuzzle()
   }
 
-  componentDidMount(){
+  componentDidMount() {
     document.addEventListener("keyup", this.handleKeyPress);
-    this.getPuzzle()
+    this.getPuzzle();
   }
 
   render() {
     return (
       <div onKeyUp={this.handleKeyPress}>
-      {/* <AlertProvider template={AlertTemplate} {...{position: positions.BOTTOM_CENTER}}> */}
-          <div className='title'>Sudoku Solver</div>
-          <Menu
-            getPuzzle={this.getPuzzle}
-            resetPuzzle={this.resetPuzzle}
-            solvePuzzle={this.solvePuzzle}
-            setCustomGame={this.setCustomGame}
-          />
-          <br />
-          <Board
-            currentPuzzle={this.state.currentPuzzle}
-            currentBoard={this.state.currentBoard}
-            currentCell={this.state.currentCell}
-            handleKeyPress={this.handleKeyPress}
-            selectCell={this.selectCell}
-          />
-          <br />
-          <Selectors 
-            selectors={this.state.selectors}
-            populateCell={this.populateCell}
-          />
-      {/* </AlertProvider> */}
+        {/* <AlertProvider template={AlertTemplate} {...{position: positions.BOTTOM_CENTER}}> */}
+        <div className="title">Sudoku Solver</div>
+        <Menu
+          getPuzzle={this.getPuzzle}
+          resetPuzzle={this.resetPuzzle}
+          solvePuzzle={this.solvePuzzle}
+          createCustomGame={this.createCustomGame}
+          setCustomGame={this.state.setCustomGame}
+        />
+        <br />
+        <Board
+          currentPuzzle={this.state.currentPuzzle}
+          currentBoard={this.state.currentBoard}
+          currentCell={this.state.currentCell}
+          handleKeyPress={this.handleKeyPress}
+          selectCell={this.selectCell}
+        />
+        <br />
+        <Selectors
+          selectors={this.state.selectors}
+          populateCell={this.populateCell}
+        />
+        {/* </AlertProvider> */}
       </div>
     );
   }
