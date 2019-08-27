@@ -10,7 +10,10 @@
     "start-oh": "webpack -d --watch",
     "start-server": "nodemon server/server.js",
     "build": "webpack --mode production",
+    "restart": "pm2 startOrRestart ecosystem.config.js",
+    "deploy": "pm2 deploy ecosystem.config.js production",
     "full-start": "webpack"
+    
   },
   "repository": {
     "type": "git",
