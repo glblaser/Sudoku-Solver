@@ -41,11 +41,11 @@ td {
 }
 
 .square {
-  height: 52px;
-  width: 52px;
+  height: 60px;
+  width: 60px;
   text-align: center;
-  line-height: 52px;
-  font-size: 25px;
+  line-height: 60px;
+  font-size: 30px;
 }
 
 .numChoices:hover {
@@ -57,10 +57,12 @@ td {
 .numChoices {
   border-radius: 50%;
 
+  /* display:inline-block; */
+
   width: 36px;
   line-height: 36px;
   padding: 8px;
-  margin: 0px 9px 0px 10px;
+  margin: 0px 9px 0px 12px;
   
   background: #fff;
   border: 2px solid #666;
@@ -68,6 +70,18 @@ td {
   text-align: center;
   
   font: 28px Arial, sans-serif;
+}
+
+#selector-0 {
+  color: #fff;
+}
+
+#selector-0:hover {
+  color: cornflowerblue;
+}
+
+#customGameButton {
+  margin-left: 4rem;
 }
 
 #selectors {

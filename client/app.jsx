@@ -92,8 +92,8 @@ export default class App extends React.Component {
     return rowValid && colValid && validCell;
   }
 
-  handleKeyPress(e) {
-    let key = e.key === 'Backspace' || e.key === 'Delete' ? 0 : parseInt(e.key);
+  handleKeyPress(e) {git a
+    let key = e.key === 'Backspace' || e.key === 'Delete' || e.key === ' ' ? 0 : parseInt(e.key);
 
     if (key >= 0 && key <= 9 && this.isCellSelected()) {
 
@@ -182,7 +182,6 @@ export default class App extends React.Component {
         JSON.stringify(this.state.currentBoard) ===
         JSON.stringify(this.state.currentSolution)
       ) {
-        console.log("SOLVED!");
         // const alert = useAlert()
         this.setState({ solved: true, currentCell: [-1, -1] }, () => {
           setTimeout(() => alert("SOLVED! You're a genius!"), 50);
