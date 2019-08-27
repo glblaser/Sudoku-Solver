@@ -92,7 +92,7 @@ export default class App extends React.Component {
     return rowValid && colValid && validCell;
   }
 
-  handleKeyPress(e) {git a
+  handleKeyPress(e) {
     let key = e.key === 'Backspace' || e.key === 'Delete' || e.key === ' ' ? 0 : parseInt(e.key);
 
     if (key >= 0 && key <= 9 && this.isCellSelected()) {

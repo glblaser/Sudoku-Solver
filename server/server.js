@@ -14,7 +14,7 @@ mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PW
 //   console.log('connected')
 // });
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3050;
 app.use(express.static("dist"));
 app.use(
   bodyParser.json({
